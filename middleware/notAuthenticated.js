@@ -1,4 +1,4 @@
-const Cookie = process.browser ? require('js-cookie') : undefined
+import { post, get } from '@@/helper/api'
 
 export default function ({ store, redirect }) {
   // If the user is authenticated redirect to home page
@@ -11,7 +11,19 @@ export default function ({ store, redirect }) {
   }
 
   if (!store.state.auth.authenticated && window.localStorage.getItem('access_token') != null) {
-    store.dispatch('auth/setUser', 'Day la data sau khi reload')
+    get('/user')
+      .then(res => {
+        let user = {
+          email: res.email,
+          name: res.name
+        }
+
+        store.dispatch('auth/setUser', user)
+      })
+      .catch(err => {
+        store.dispatch('auth/logout')
+        return redirect('/auth/login')
+      })
 
     if (window.localStorage.getItem('redirect_url') != null
       && window.localStorage.getItem('redirect_url') != '/auth/login'

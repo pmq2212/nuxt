@@ -7,6 +7,7 @@
  */
 
 import * as types from './mutation-types'
+import { post ,get } from '@@/helper/api'
 // import * as routes from '../../../router/router'
 
 export const check = ({ commit }) => {
@@ -17,19 +18,27 @@ export const login = ({ commit }, data) => {
     commit('SET_LOADING', true, { root: true })
 
     return new Promise((resolve, reject) => {
-        // Fake data login
-        const auth = {
-            auth: {
-                access_token: 'demo',
-            },
-            user: data.email
-        }
+        // Call api login
+        post('/login', {email: data.email, password: data.password})
+            .then(res => {
+                let data = {
+                    auth: {
+                        access_token: res.token.access_token
+                    },
+                    user: {
+                        email: res.email,
+                        name: res.userName
+                    }
+                }
 
-        // Call api after
-
-        commit(types.LOGIN, auth)
-        commit('SET_LOADING', false, { root: true })
-        resolve(200) // return http code
+                commit(types.LOGIN, data)
+                commit('SET_LOADING', false, { root: true })
+                resolve(200) // return http code
+            })
+            .catch(err => {
+                commit('SET_LOADING', false, { root: true });
+                reject(err)
+            })
     })
 };
 

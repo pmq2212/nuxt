@@ -38,6 +38,9 @@ module.exports = {
   mode: 'spa',
   plugins: [
     {src: '~/plugins/token.js', ssr: false}
-  ]
+  ],
+  env: {
+    baseUrl: 'http://localhost:3000'
+  }
 }
 

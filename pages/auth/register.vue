@@ -10,28 +10,12 @@
           <input type="email" id="email" v-model="email">
         </div>
         <div class="input">
-          <label for="age">Your Age</label>
-          <input type="number" id="age" v-model.number="age">
-        </div>
-        <div class="input">
           <label for="password">Password</label>
           <input type="password" id="password" v-model="password">
         </div>
         <div class="input">
           <label for="confirm-password">Confirm Password</label>
           <input type="password" id="confirm-password" v-model="confirmPassword">
-        </div>
-        <div class="input">
-          <label for="country">Country</label>
-          <select id="country" @change="onSelect(country)" v-model="country">
-            <option v-for="dContry in dataCountry" :key="dContry.id" :value="dContry.id">
-              {{ dContry.code }}
-            </option>
-          </select>
-        </div>
-        <div class="input inline">
-          <input type="checkbox" id="terms" v-model="terms">
-          <label for="terms">Accept Terms of Use</label>
         </div>
 
         <div class="action">

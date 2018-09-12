@@ -52,7 +52,6 @@ export default {
         'login',
     ]),
     onSubmit () {
-      // console.log(this.auth)
       if (this.user.email == '' || this.user.password == '') {
         this.validate = true
         this.message = 'Please enter email and password'
@@ -63,9 +62,10 @@ export default {
       this.login(this.user)
         .then(res => {
           // redirect after login success
-          console.log('123123')
 
-          let urlRedirect = window.localStorage.getItem('redirect_url') != null ? window.localStorage.getItem('redirect_url') : '/dashboard'
+          let urlRedirect = window.localStorage.getItem('redirect_url') != null
+            ? window.localStorage.getItem('redirect_url')
+            : '/dashboard'
           this.$router.push(urlRedirect)
 
           window.localStorage.removeItem('redirect_url')

@@ -17,6 +17,9 @@
         <li v-if="this.auth.authenticated">
           <nuxt-link :to="{ name: 'dashboard' }">Dash Board</nuxt-link>
         </li>
+        <li v-if="this.auth.authenticated">
+          <nuxt-link :to="{ name: 'dashboard-listitem' }">Go To List Item</nuxt-link>
+        </li>
       </ul>
     </nav>
   </header>
