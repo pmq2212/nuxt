@@ -19,12 +19,76 @@
           <div class="submit">
             <router-link class="btn btn-primary" :to="{ name: 'auth-register' }">Register</router-link>
           </div>
+          <div class="submit">
+          <button class="btn btn-primary" @click="demoBtn">DEmo</button>
+          </div>
         </div>
     </div>
   </div>
 </template>
 
-<script type="application/javascript" src="@@/app/business/LoginBusiness.js"></script>
+<script>
+import { mapState, mapActions } from 'vuex'
+import { demo } from '@@/helper/api'
+
+export default {
+  middleware: 'notAuthenticated',
+  layout: 'default', // Setting this component will load to Default layout
+  data () {
+    return {
+      user: {
+          email: '',
+          password: ''
+      },
+      validate: false,
+      messsage: ''
+    }
+  },
+  computed: {
+    ...mapState({
+        loading: state => state.loading,
+        auth: state => state.auth,
+    })
+  },
+  methods: {
+    ...mapActions('auth', [
+        'login',
+    ]),
+    onSubmit () {
+      if (this.user.email == '' || this.user.password == '') {
+        this.validate = true
+        this.message = 'Please enter email and password'
+
+        return
+      }
+
+      this.login(this.user)
+        .then(res => {
+          // redirect after login success
+
+          let urlRedirect = window.localStorage.getItem('redirect_url') != null
+            ? window.localStorage.getItem('redirect_url')
+            : '/dashboard'
+          this.$router.push(urlRedirect)
+
+          window.localStorage.removeItem('redirect_url')
+          // redirect(this.url.nextUrl)
+        }).catch(err => {
+          console.log(err)
+        })
+    },
+    demoBtn () {
+      demo()
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
+}
+</script>
 
 <style scoped lang="scss">
   @import "@@/assets/login.scss";

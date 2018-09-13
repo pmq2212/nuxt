@@ -11,6 +11,7 @@ export default {
     [CHECK](state) {
         // Check user is login
         state.authenticated = !!localStorage.getItem('access_token')
+        axios.defaults.headers.common['X-TOKEN'] = localStorage.getItem('access_token')
         axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`
     },
 
@@ -27,6 +28,7 @@ export default {
 
         // Set token common for call api
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        axios.defaults.headers.common['X-TOKEN'] = token
     },
 
     [LOGOUT](state) {

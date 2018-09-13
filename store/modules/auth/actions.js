@@ -23,11 +23,11 @@ export const login = ({ commit }, data) => {
             .then(res => {
                 let data = {
                     auth: {
-                        access_token: res.token.access_token
+                        access_token: res.data.token[0].access_token
                     },
                     user: {
-                        email: res.email,
-                        name: res.userName
+                        email: res.data.email,
+                        name: res.data.userName
                     }
                 }
 
