@@ -19,6 +19,9 @@
           <div class="submit">
             <router-link class="btn btn-primary" :to="{ name: 'auth-register' }">Register</router-link>
           </div>
+          <div class="submit">
+          <button class="btn btn-primary" @click="demoBtn">DEmo</button>
+          </div>
         </div>
     </div>
   </div>
@@ -26,6 +29,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { demo } from '@@/helper/api'
 
 export default {
   middleware: 'notAuthenticated',
@@ -44,7 +48,6 @@ export default {
     ...mapState({
         loading: state => state.loading,
         auth: state => state.auth,
-        url: state => state.url
     })
   },
   methods: {
@@ -71,6 +74,15 @@ export default {
           window.localStorage.removeItem('redirect_url')
           // redirect(this.url.nextUrl)
         }).catch(err => {
+          console.log(err)
+        })
+    },
+    demoBtn () {
+      demo()
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
           console.log(err)
         })
     }
